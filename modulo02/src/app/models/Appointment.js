@@ -36,7 +36,7 @@ class Appointment extends Model {
     return false;
   }
 
-  static async getAllAppointmentsOf(user_id) {
+  static async getAppointments(user_id, numberPage) {
     const appointment = await Appointment.findAll({
       where: {
         user_id,
@@ -44,6 +44,8 @@ class Appointment extends Model {
       },
       order: ['date'],
       attributes: ['id', 'date'],
+      limit: 20,
+      offset: (numberPage - 1) * 20,
       include: [
         {
           model: User,

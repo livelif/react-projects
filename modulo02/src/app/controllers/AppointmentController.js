@@ -7,7 +7,8 @@ import User from '../models/User';
 class AppointmentController {
   async index(req, res) {
     const { userId } = req;
-    const appointments = await Appointment.getAllAppointmentsOf(userId);
+    const { page = 1 } = req.query;
+    const appointments = await Appointment.getAppointments(userId, page);
     return res.json(appointments);
   }
 
