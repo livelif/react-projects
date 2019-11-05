@@ -22,6 +22,26 @@ class User extends Model {
       }
     });
   }
+
+  static associate(models) {
+    this.belongsTo(models.File, { foreignKey: 'avatar_id', as: 'avatar' });
+  }
+
+  static async isUserProvider(userId) {
+    const isProvider = await this.findOne({
+      where: { id: userId, provider: true },
+    });
+
+    if (!isProvider) {
+      return false;
+    }
+
+    return true;
+  }
+
+  checkPassword(password) {
+    return bcrypt.compare(password, this.password_hash);
+  }
 }
 
 export default User;
