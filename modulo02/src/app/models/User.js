@@ -39,6 +39,12 @@ class User extends Model {
     return true;
   }
 
+  static async getUserUsingPrimaryKey(primaryKey) {
+    const user = await User.findByPk(primaryKey);
+
+    return user;
+  }
+
   checkPassword(password) {
     return bcrypt.compare(password, this.password_hash);
   }
